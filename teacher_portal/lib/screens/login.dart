@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     final response = await http.post(
-      Uri.parse("$apiUrl:$apiPort/students/check_student/"),
+      Uri.parse("$apiUrl:$apiPort/teachers/check_teacher/"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"name": fullName}),
     );
