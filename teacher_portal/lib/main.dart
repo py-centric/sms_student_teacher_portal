@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'screens/login.dart';
 import 'screens/notes/notes.dart';
+import 'screens/classes/classes.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env"); // Load environment variables
@@ -36,10 +37,12 @@ class _MyAppState extends State<MyApp> {
     }
 
     List<Widget> pages = [
-      ///ScheduleScreen(teacherData: teacherData!),
-      //ClassesScreen(teacherData: teacherData!),
-      //RegisterScreen(teacherData: teacherData!),
+      
+     
       NotesWidget(), // Notes screen already handles note saving & viewing
+      ClassesScreen(teacherData: teacherData!),
+      ///ScheduleScreen(teacherData: teacherData!),
+     //RegisterScreen(teacherData: teacherData!),
     ];
 
     return MaterialApp(
@@ -66,14 +69,15 @@ class _MyAppState extends State<MyApp> {
               icon: Icon(Icons.note),
               label: 'Notes',
             ),
+              BottomNavigationBarItem(
+              icon: Icon(Icons.class_),
+              label: 'Classes',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.schedule),
               label: 'Schedule',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.class_),
-              label: 'Classes',
-            ),
+          
             BottomNavigationBarItem(
               icon: Icon(Icons.checklist),
               label: 'Register',
