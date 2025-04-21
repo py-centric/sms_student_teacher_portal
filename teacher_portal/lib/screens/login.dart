@@ -56,12 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
         widget.onLoginSuccess(data);
       } else {
         setState(() {
-          errorMessage = "Student not found!";
+          errorMessage = "Teacher not found!";
         });
       }
     } else {
       setState(() {
-        errorMessage = "Student not found.";
+        errorMessage = "Teacher not found.";
       });
     }
   }
