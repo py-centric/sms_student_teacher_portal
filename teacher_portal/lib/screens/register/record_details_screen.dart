@@ -17,16 +17,14 @@ class RecordDetailsScreen extends StatefulWidget {
 class _RecordDetailsScreenState extends State<RecordDetailsScreen> {
   late TextEditingController subjectController;
   late TextEditingController dateController;
-  late TextEditingController newStudentController;
   List<String> studentNames = [];
+  TextEditingController newStudentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    subjectController =
-        TextEditingController(text: widget.record['subject'] ?? '');
-    dateController = TextEditingController(text: widget.record['date'] ?? '');
-    newStudentController = TextEditingController();
+    subjectController = TextEditingController(text: widget.record['subject']);
+    dateController = TextEditingController(text: widget.record['date']);
     studentNames = List<String>.from(widget.record['studentsPresent'] ?? []);
   }
 
@@ -69,7 +67,7 @@ class _RecordDetailsScreenState extends State<RecordDetailsScreen> {
         title: const Text('Edit Attendance'),
         backgroundColor: const Color.fromARGB(255, 17, 84, 185),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
@@ -77,16 +75,13 @@ class _RecordDetailsScreenState extends State<RecordDetailsScreen> {
               controller: subjectController,
               decoration: const InputDecoration(labelText: 'Subject'),
             ),
-            const SizedBox(height: 10),
             TextField(
               controller: dateController,
               decoration: const InputDecoration(labelText: 'Date'),
             ),
             const SizedBox(height: 20),
-            const Text(
-              "Students Present",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            const Text("Students Present",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             ...studentNames.asMap().entries.map((entry) {
               int idx = entry.key;
@@ -99,7 +94,6 @@ class _RecordDetailsScreenState extends State<RecordDetailsScreen> {
                 ),
               );
             }),
-            const SizedBox(height: 10),
             TextField(
               controller: newStudentController,
               decoration: InputDecoration(
@@ -113,9 +107,6 @@ class _RecordDetailsScreenState extends State<RecordDetailsScreen> {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: saveChanges,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 17, 84, 185),
-              ),
               child: const Text('Save Changes'),
             ),
           ],

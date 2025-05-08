@@ -1,118 +1,274 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:teacher_portal/screens/register/attendance_records.dart';
+import '../notes/notes.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Map<String, dynamic> teacherData;
+  final List<Map<String, dynamic>> savedAttendance; // Add this line
 
-  const RegisterScreen({super.key, required this.teacherData});
+  const RegisterScreen({
+    super.key,
+    required this.teacherData,
+    required this.savedAttendance, // Add this line to pass data
+  });
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  int? selectedGrade;
-  List<dynamic> learners = [];
-  bool isLoading = false;
+  final List<String> students = [
+    'Matome Mokoena',
+    'Tshegofatso Marope',
+    'Kamohelo Khumalo',
+    'Kedumetse Mogotsi',
+    'Ofentse Mthembu',
+    'Oagile Motsepe',
+    'Paballo Ndlovu',
+    'Olebogeng Dlamini',
+    'Boitumelo Mabuza',
+    'Atlegang Kgomo',
+    'Thabang Mahlangu',
+    'Lesedi Ramphora',
+  ];
 
-  Set<int> extractUniqueGrades() {
-    List subjects = widget.teacherData['subjects'];
-    return subjects.map<int>((subject) => subject['grade'] as int).toSet();
+  final List<String> subjects = [
+    'Mathematics',
+    'Science',
+    'English',
+    'Life Orientation'
+  ];
+  String selectedSubject = 'Mathematics';
+
+  final List<String> grades = [
+    for (int i = 8; i <= 12; i++) ...['${i}A', '${i}B']
+  ];
+  String selectedGrade = '8A';
+
+  final List<bool> attendance = List<bool>.filled(12, false);
+  DateTime selectedDate = DateTime.now();
+
+  String getFormattedDate() {
+    final now = DateTime.now();
+    return "${now.day} ${_getMonthName(now.month)} ${now.year}";
   }
 
-  Future<void> fetchLearnersForGrade(int grade) async {
+  String _getMonthName(int month) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    return months[month - 1];
+  }
+
+  int get presentCount => attendance.where((isPresent) => isPresent).length;
+
+  void _saveAttendance() {
+    final presentStudents = students
+        .asMap()
+        .entries
+        .where((entry) => attendance[entry.key])
+        .map((entry) => entry.value)
+        .toList();
+
+    final record = {
+      "date": "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
+      "subject": selectedSubject,
+      "grade": selectedGrade,
+      "present": presentStudents,
+    };
+
     setState(() {
-      isLoading = true;
-      learners = [];
+      widget.savedAttendance
+          .add(record); // Update the savedAttendance in widget
     });
 
-    String apiUrl = dotenv.env['IPv4'] ?? '';
-    String apiPort = dotenv.env['API_PORT'] ?? '8000';
-
-    final response = await http.get(
-      Uri.parse("$apiUrl:$apiPort/learners/by_grade/$grade"),
-      headers: {"Content-Type": "application/json"},
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Attendance saved!')),
     );
 
-    setState(() {
-      isLoading = false;
-    });
-
-    if (response.statusCode == 200) {
-      setState(() {
-        learners = jsonDecode(response.body);
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to fetch learners.")),
-      );
-    }
+    // Navigate and pass savedAttendance to the next screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AttendanceRecords(
+          savedAttendance: widget.savedAttendance, // Pass the updated data
+          onDelete: (index) {
+            setState(() {
+              widget.savedAttendance.removeAt(index); // Update on delete
+            });
+          },
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final uniqueGrades = extractUniqueGrades();
-
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 17, 84, 185),
       appBar: AppBar(
-        title: const Text('Register Learners'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Register Attendance',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AttendanceRecords(
+                    savedAttendance:
+                        widget.savedAttendance, // Pass the updated data
+                    onDelete: (index) {
+                      setState(() {
+                        widget.savedAttendance.removeAt(index);
+                      });
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DropdownButton<int>(
-              value: selectedGrade,
-              hint: const Text("Select Grade"),
-              items: uniqueGrades.map((grade) {
-                return DropdownMenuItem(
-                  value: grade,
-                  child: Text('Grade $grade'),
-                );
-              }).toList(),
-              onChanged: (grade) {
-                setState(() {
-                  selectedGrade = grade;
-                });
-                fetchLearnersForGrade(grade!);
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  getFormattedDate(),
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                DropdownButton<String>(
+                  value: selectedSubject,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSubject = newValue!;
+                    });
+                  },
+                  items: subjects.map((subject) {
+                    return DropdownMenuItem<String>(
+                      value: subject,
+                      child:
+                          Text(subject, style: const TextStyle(fontSize: 18)),
+                    );
+                  }).toList(),
+                ),
+                DropdownButton<String>(
+                  value: selectedGrade,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedGrade = newValue!;
+                    });
+                  },
+                  items: grades.map((grade) {
+                    return DropdownMenuItem<String>(
+                      value: grade,
+                      child: Text(grade, style: const TextStyle(fontSize: 18)),
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            if (isLoading)
-              const CircularProgressIndicator()
-            else if (learners.isEmpty && selectedGrade != null)
-              const Text("No learners found for this grade.")
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: learners.length,
-                  itemBuilder: (context, index) {
-                    var learner = learners[index];
-                    return ListTile(
-                      title: Text(learner['name']),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
+            const SizedBox(height: 8),
+            Text(
+              'Present: $presentCount/${students.length}',
+              style: const TextStyle(fontSize: 16, color: Colors.green),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: students.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8.0),
+                      child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.check, color: Colors.green),
-                            onPressed: () {
-                              // Mark as present (future implementation)
-                            },
+                          Expanded(
+                            child: Text(
+                              students[index],
+                              style: const TextStyle(fontSize: 18),
+                            ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.close, color: Colors.red),
+                            icon: const Icon(Icons.sticky_note_2_outlined,
+                                color: Colors.blueGrey),
                             onPressed: () {
-                              // Mark as absent (future implementation)
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      NotesWidget(studentName: students[index]),
+                                ),
+                              );
+                            },
+                          ),
+                          Checkbox(
+                            activeColor: const Color.fromARGB(255, 17, 84, 185),
+                            value: attendance[index],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                attendance[index] = value ?? false;
+                              });
                             },
                           ),
                         ],
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: ElevatedButton(
+                onPressed: _saveAttendance,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 17, 84, 185),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: const Text(
+                  'Save Attendance',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
+            ),
           ],
         ),
       ),
