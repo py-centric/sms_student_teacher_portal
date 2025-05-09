@@ -17,6 +17,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       "grade": "Grade 10",
       "room": "Room 101",
       "time": "08:00 - 09:00",
+      "date": "",
       "note": ""
     },
     {
@@ -24,6 +25,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       "grade": "Grade 11",
       "room": "Lab 1",
       "time": "09:15 - 10:15",
+      "date": "",
       "note": ""
     },
     {
@@ -31,10 +33,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       "grade": "Grade 12",
       "room": "Room 203",
       "time": "11:00 - 12:00",
+      "date": "",
       "note": ""
     },
   ];
-
   void _editSchedule(int index) async {
     final updatedClass = await Navigator.push<Map<String, String>>(
       context,
@@ -87,6 +89,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(cls['grade']!),
+                      if (cls['date']!.isNotEmpty) Text("Date: ${cls['date']}"),
                       Text("Time: ${cls['time']}"),
                       Text("Location: ${cls['room']}"),
                       if (cls['note']!.isNotEmpty)
