@@ -4,12 +4,12 @@ import '../notes/notes.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Map<String, dynamic> teacherData;
-  final List<Map<String, dynamic>> savedAttendance; // Add this line
+  final List<Map<String, dynamic>> savedAttendance;
 
   const RegisterScreen({
     super.key,
     required this.teacherData,
-    required this.savedAttendance, // Add this line to pass data
+    required this.savedAttendance,
   });
 
   @override
@@ -89,23 +89,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     };
 
     setState(() {
-      widget.savedAttendance
-          .add(record); // Update the savedAttendance in widget
+      widget.savedAttendance.add(record);
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Attendance saved!')),
     );
 
-    // Navigate and pass savedAttendance to the next screen
+    // Navigate and pass savedAttendance and students to the next screen
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AttendanceRecords(
-          savedAttendance: widget.savedAttendance, // Pass the updated data
+          savedAttendance: widget.savedAttendance,
+          allStudents: students, // ✅ Pass the students list here
           onDelete: (index) {
             setState(() {
-              widget.savedAttendance.removeAt(index); // Update on delete
+              widget.savedAttendance.removeAt(index);
             });
           },
         ),
@@ -137,8 +137,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => AttendanceRecords(
-                    savedAttendance:
-                        widget.savedAttendance, // Pass the updated data
+                    savedAttendance: widget.savedAttendance,
+                    allStudents: students, // Pass the list here as well
                     onDelete: (index) {
                       setState(() {
                         widget.savedAttendance.removeAt(index);
