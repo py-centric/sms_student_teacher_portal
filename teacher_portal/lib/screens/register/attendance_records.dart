@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'record_details_screen.dart';
 
 class AttendanceRecords extends StatefulWidget {
+  // List of attendance records saved
   final List<Map<String, dynamic>> savedAttendance;
+
+  // List of all registered students (needed for RecordDetailsScreen)
+  final List<String> allStudents;
+
+  // Optional callback to handle delete events
   final Function(int index)? onDelete;
 
+  // Constructor with required parameters
   const AttendanceRecords({
     super.key,
     required this.savedAttendance,
+    required this.allStudents, // ✅ Add this
     this.onDelete,
   });
 
@@ -16,6 +24,7 @@ class AttendanceRecords extends StatefulWidget {
 }
 
 class _AttendanceRecordsState extends State<AttendanceRecords> {
+  // Internal copy of the attendance list to allow editing
   late List<Map<String, dynamic>> attendanceList;
 
   @override
@@ -24,8 +33,8 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
     attendanceList = List<Map<String, dynamic>>.from(widget.savedAttendance);
   }
 
+  // Function to delete a record with confirmation dialog
   void _deleteRecord(int index) async {
-    // Show confirmation dialog before deleting
     bool? confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -34,13 +43,13 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(false); // User declined
+              Navigator.of(context).pop(false);
             },
             child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(true); // User confirmed
+              Navigator.of(context).pop(true);
             },
             child: const Text("Delete"),
           ),
@@ -48,7 +57,6 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
       ),
     );
 
-    // If confirmed, delete the record
     if (confirmed == true) {
       setState(() {
         attendanceList.removeAt(index);
@@ -59,6 +67,7 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
     }
   }
 
+  // Function to update a record
   void _updateRecord(int index, Map<String, dynamic> updatedRecord) {
     setState(() {
       attendanceList[index] = updatedRecord;
@@ -85,12 +94,15 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
 
                   return GestureDetector(
                     onTap: () async {
+                      // Open the RecordDetailsScreen and wait for updated record
                       final updatedRecord = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => RecordDetailsScreen(
                             record: record,
                             index: index,
+                            allStudents:
+                                widget.allStudents, // ✅ Pass actual list
                           ),
                         ),
                       );
