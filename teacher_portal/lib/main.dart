@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/login.dart';
 import 'screens/notes/notes.dart';
 import 'screens/classes/classes.dart';
-// import 'screens/schedule/schedule.dart';
+import 'screens/schedule/schedule.dart';
 // import 'screens/register/register.dart';
 
 void main() async {
@@ -44,8 +44,8 @@ class _MyAppState extends State<MyApp> {
     final List<Widget> pages = [
       NotesWidget(),
       ClassesScreen(teacherData: teacherData!),
-      // ScheduleScreen(teacherData: teacherData!),
-      // RegisterScreen(teacherData: teacherData!),
+      ScheduleScreen(teacherData: teacherData!),
+      //RegisterScreen(teacherData: teacherData!),
     ];
 
     return MaterialApp(
