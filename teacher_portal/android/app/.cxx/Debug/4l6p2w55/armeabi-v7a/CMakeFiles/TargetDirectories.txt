@@ -1,0 +1,2 @@
+C:/Users/Mthokon/Desktop/Work/sms_student_teacher_portal/teacher_portal/android/app/.cxx/Debug/4l6p2w55/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Mthokon/Desktop/Work/sms_student_teacher_portal/teacher_portal/android/app/.cxx/Debug/4l6p2w55/armeabi-v7a/CMakeFiles/rebuild_cache.dir
