@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/login.dart';
 import 'screens/notes/notes.dart';
 import 'screens/classes/classes.dart';
-// import 'screens/schedule/schedule.dart';
-// import 'screens/register/register.dart';
+import 'screens/schedule/schedule.dart';
+import 'screens/register/register.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env"); // Load environment variables
@@ -39,13 +39,19 @@ class _MyAppState extends State<MyApp> {
     }
 
     // Extract teacher's first name for greeting
-    String teacherName = "${teacherData?['first_name'] ?? ''} ${teacherData?['last_name'] ?? ''}";
+    String teacherName =
+        "${teacherData?['first_name'] ?? ''} ${teacherData?['last_name'] ?? ''}";
 
     final List<Widget> pages = [
-      NotesWidget(),
+      NotesWidget(
+        studentName: '',
+      ),
       ClassesScreen(teacherData: teacherData!),
-      // ScheduleScreen(teacherData: teacherData!),
-      // RegisterScreen(teacherData: teacherData!),
+      ScheduleScreen(teacherData: teacherData!),
+      RegisterScreen(
+        teacherData: teacherData!,
+        savedAttendance: [],
+      ),
     ];
 
     return MaterialApp(
