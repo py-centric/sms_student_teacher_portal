@@ -5,10 +5,11 @@ import 'screens/login.dart';
 import 'screens/notes/notes.dart';
 import 'screens/classes/classes.dart';
 import 'screens/schedule/schedule.dart';
-// import 'screens/register/register.dart';
+import 'screens/register/register.dart'; // <-- Register screen
+import 'screens/mcq/mcq_screen.dart'; // <-- MCQ screen
 
 void main() async {
-  await dotenv.load(fileName: ".env"); // Load environment variables
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -20,7 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Map<String, dynamic>? teacherData; // Stores teacher info after login
+  Map<String, dynamic>? teacherData;
   int _selectedIndex = 0;
 
   void handleLoginSuccess(Map<String, dynamic> data) {
@@ -38,14 +39,14 @@ class _MyAppState extends State<MyApp> {
       );
     }
 
-    // Extract teacher's first name for greeting
     String teacherName = "${teacherData?['first_name'] ?? ''} ${teacherData?['last_name'] ?? ''}";
 
     final List<Widget> pages = [
       NotesWidget(),
       ClassesScreen(teacherData: teacherData!),
       ScheduleScreen(teacherData: teacherData!),
-      //RegisterScreen(teacherData: teacherData!),
+      RegisterScreen(teacherData: teacherData!), // ✅ Register added back
+      MCQScreen(), // ✅ MCQ screen
     ];
 
     return MaterialApp(
@@ -85,6 +86,10 @@ class _MyAppState extends State<MyApp> {
             BottomNavigationBarItem(
               icon: Icon(Icons.checklist),
               label: 'Register',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.quiz),
+              label: 'MCQs',
             ),
           ],
         ),
