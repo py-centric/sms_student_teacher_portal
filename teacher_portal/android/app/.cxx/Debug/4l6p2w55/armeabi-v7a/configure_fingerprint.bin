@@ -2,6 +2,7 @@ C/C++ Structured Logñ
 ì
 êC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\additional_project_files.txtC
 A
+<<<<<<< HEAD
 ?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	æ˚åŒÏ2 ö˚åŒÏ2ì
 ê
 çC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\android_gradle_build.json	æ˚åŒÏ2ö	 §˚åŒÏ2ò
@@ -26,3 +27,29 @@ A
 ãC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\symbol_folder_index.txt	æ˚åŒÏ2Ç µ˚åŒÏ2Y
 W
 UC:\Users\Mthokon\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	æ˚åŒÏ2ß ù¶≥ÜË2
+=======
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	ú’ƒµÏ2 ËÊ€åÎ2ì
+ê
+çC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\android_gradle_build.json	ú’ƒµÏ2ö	 ÓÊ€åÎ2ò
+ï
+íC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\android_gradle_build_mini.json	ú’ƒµÏ2Ò ˙Ê€åÎ2Ñ
+Å
+C:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\build.ninja	ú’ƒµÏ2ôŸ £·€åÎ2â
+Ü
+ÉC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\build.ninja.txt	ú’ƒµÏ2é
+ã
+àC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\build_file_index.txt	ú’ƒµÏ2U ÇÁ€åÎ2è
+å
+âC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\compile_commands.json	ú’ƒµÏ2ì
+ê
+çC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\compile_commands.json.bin	ú’ƒµÏ2	ô
+ñ
+ìC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\metadata_generation_command.txt	ú’ƒµÏ2
+‘	 ˝Ê€åÎ2å
+â
+ÜC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\prefab_config.json	ú’ƒµÏ2( ˇÊ€åÎ2ë
+é
+ãC:\Users\Mthokon\Desktop\Work\sms_student_teacher_portal\teacher_portal\android\app\.cxx\Debug\4l6p2w55\armeabi-v7a\symbol_folder_index.txt	ú’ƒµÏ2Ç ÄÁ€åÎ2Y
+W
+UC:\Users\Mthokon\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	ú’ƒµÏ2ß ù¶≥ÜË2
+>>>>>>> main
