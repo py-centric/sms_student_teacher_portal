@@ -30,7 +30,7 @@ class _CreateMCQFormState extends State<CreateMCQForm> {
 
     String apiUrl = dotenv.env['IPv4'] ?? '';
     String apiPort = dotenv.env['API_PORT'] ?? '8000';
-    final url = Uri.parse('$apiUrl:$apiPort/mcq/questions');
+    final url = Uri.parse('$apiUrl:$apiPort/mcq/questions/');
 
     final body = {
       "question_text": _questionController.text,
@@ -51,7 +51,9 @@ class _CreateMCQFormState extends State<CreateMCQForm> {
           _successMessage = "Question saved successfully!";
           _formKey.currentState?.reset();
           _correctOptionIndex = null;
-          for (final c in _optionControllers) c.clear();
+          for (final c in _optionControllers) {
+            c.clear();
+          }
           _questionController.clear();
           _subjectController.clear();
         });

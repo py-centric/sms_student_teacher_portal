@@ -30,7 +30,7 @@ class _ViewMCQsState extends State<ViewMCQs> {
     try {
       final apiUrl = dotenv.env['IPv4'] ?? '';
       final apiPort = dotenv.env['API_PORT'] ?? '8000';
-      final url = Uri.parse('$apiUrl:$apiPort/mcq/questions');
+      final url = Uri.parse('$apiUrl:$apiPort/mcq/view_questions');
 
       final response = await http.get(url);
 
