@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class NotesWidget extends StatefulWidget {
-  const NotesWidget({super.key});
+  const NotesWidget({super.key, required String studentName});
 
   @override
   _NotesWidgetState createState() => _NotesWidgetState();
