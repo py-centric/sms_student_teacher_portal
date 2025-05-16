@@ -39,7 +39,8 @@ class _MyAppState extends State<MyApp> {
       );
     }
 
-    String teacherName = "${teacherData?['first_name'] ?? ''} ${teacherData?['last_name'] ?? ''}";
+    String teacherName =
+        "${teacherData?['first_name'] ?? ''} ${teacherData?['last_name'] ?? ''}";
 
     final List<Widget> pages = [
       NotesWidget(
@@ -47,7 +48,10 @@ class _MyAppState extends State<MyApp> {
       ),
       ClassesScreen(teacherData: teacherData!),
       ScheduleScreen(teacherData: teacherData!),
-      RegisterScreen(teacherData: teacherData!), // ✅ Register added back
+      RegisterScreen(
+        teacherData: teacherData!,
+        savedAttendance: [],
+      ), // ✅ Register added back
       MCQScreen(), // ✅ MCQ screen
     ];
 
