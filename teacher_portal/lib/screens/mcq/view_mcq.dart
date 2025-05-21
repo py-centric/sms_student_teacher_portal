@@ -64,6 +64,7 @@ class _ViewMCQsState extends State<ViewMCQs> {
       itemCount: mcqs.length,
       itemBuilder: (context, index) {
         final q = mcqs[index];
+        final String? explanation = q['explanation'];
         return Card(
           elevation: 3,
           margin: const EdgeInsets.only(bottom: 12),
@@ -78,7 +79,11 @@ class _ViewMCQsState extends State<ViewMCQs> {
                   final isCorrect = i == q['correct_answer_index'];
                   return Row(
                     children: [
-                      Icon(isCorrect ? Icons.check_circle : Icons.circle, color: isCorrect ? Colors.green : Colors.grey, size: 16),
+                      Icon(
+                        isCorrect ? Icons.check_circle : Icons.circle,
+                        color: isCorrect ? Colors.green : Colors.grey,
+                        size: 16,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(child: Text(q['options'][i])),
                     ],
@@ -88,6 +93,14 @@ class _ViewMCQsState extends State<ViewMCQs> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text("Subject: ${q['subject']}", style: const TextStyle(color: Colors.blueGrey)),
+                  ),
+                if (explanation != null && explanation.trim().isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      "Explanation: $explanation",
+                      style: const TextStyle(color: Colors.deepOrange),
+                    ),
                   ),
               ],
             ),

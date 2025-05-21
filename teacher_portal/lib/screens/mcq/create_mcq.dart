@@ -13,9 +13,11 @@ class CreateMCQForm extends StatefulWidget {
 class _CreateMCQFormState extends State<CreateMCQForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _questionController = TextEditingController();
-  final List<TextEditingController> _optionControllers = List.generate(4, (_) => TextEditingController());
-  int? _correctOptionIndex;
+  final List<TextEditingController> _optionControllers =
+      List.generate(4, (_) => TextEditingController());
   final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _explanationController = TextEditingController();
+  int? _correctOptionIndex;
 
   bool _isSubmitting = false;
   String? _errorMessage;
@@ -34,9 +36,10 @@ class _CreateMCQFormState extends State<CreateMCQForm> {
 
     final body = {
       "question_text": _questionController.text,
-      "options": _optionControllers.map((controller) => controller.text).toList(),
+      "options": _optionControllers.map((c) => c.text).toList(),
       "correct_answer_index": _correctOptionIndex,
       "subject": _subjectController.text.isEmpty ? null : _subjectController.text,
+      "explanation": _explanationController.text.isEmpty ? null : _explanationController.text,
     };
 
     try {
@@ -56,6 +59,7 @@ class _CreateMCQFormState extends State<CreateMCQForm> {
           }
           _questionController.clear();
           _subjectController.clear();
+          _explanationController.clear();
         });
       } else {
         final responseJson = json.decode(response.body);
@@ -136,6 +140,15 @@ class _CreateMCQFormState extends State<CreateMCQForm> {
                 labelText: 'Subject (Optional)',
                 border: OutlineInputBorder(),
               ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _explanationController,
+              decoration: const InputDecoration(
+                labelText: 'Explanation (Optional)',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
             ),
             const SizedBox(height: 20),
             SizedBox(
